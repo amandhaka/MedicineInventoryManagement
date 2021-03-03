@@ -2,8 +2,10 @@ package com.example.AccountService.controller;
 
 import com.example.AccountService.dto.EmployeeAuthenticationRequest;
 import com.example.AccountService.dto.EmployeeAuthenticationResponse;
+import com.example.AccountService.dto.EmployeeRequestDto;
+import com.example.AccountService.dto.EmployeeResponseDto;
+import com.example.AccountService.service.EmployeeService;
 import com.example.AccountService.util.JwtUtil;
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,6 +23,9 @@ public class EmployeeController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @PostMapping("/login")
     public EmployeeAuthenticationResponse generateToken(@RequestBody EmployeeAuthenticationRequest employeeAuthenticationRequest) throws BadCredentialsException{
         try{
@@ -31,6 +36,11 @@ public class EmployeeController {
         EmployeeAuthenticationResponse employeeAuthenticationResponse = new EmployeeAuthenticationResponse();
         employeeAuthenticationResponse.setJwt(jwtUtil.generateToken(employeeAuthenticationRequest.getUsername()));
         return employeeAuthenticationResponse;
+    }
+
+    @PostMapping("/register-as-user")
+    public EmployeeResponseDto employeeResponseDto(@RequestBody EmployeeRequestDto requestDto){
+        return employeeService.insertDataIntoEmployee(requestDto);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.example.AccountService.config;
 
 import com.example.AccountService.filter.JwtFilter;
-import com.example.AccountService.service.AdminService;
-import com.example.AccountService.service.AuthUserService;
 import com.example.AccountService.service.EmployeeService;
-import com.example.AccountService.service.impl.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,18 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private EmployeeService employeeService;
 
     @Autowired
-    private AdminService adminService;
-
-    @Autowired
     private JwtFilter jwtFilter;
-
-    @Autowired
-    private AuthUserService authUserService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-         auth.userDetailsService(employeeService);
-         auth.userDetailsService(adminService);
+        auth.userDetailsService(employeeService);
     }
 
     @Bean
@@ -53,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/login-as-admin","/login")
+        http.csrf().disable().authorizeRequests().antMatchers("/register-as-user","/login")
                 .permitAll().anyRequest().authenticated().and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
