@@ -15,8 +15,7 @@ public class Admin {
     @GenericGenerator(name = "admin_id_seq" , strategy = "increment")
     @GeneratedValue(generator="admin_id_seq",strategy = GenerationType.AUTO)
     private Long id;
-
     private String username;
-    private String passWord;
+    private String password;
     private String name;
 }
