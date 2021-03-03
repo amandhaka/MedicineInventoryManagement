@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AdminController {
@@ -39,7 +37,17 @@ public class AdminController {
     }
 
     @PostMapping("/register-as-admin")
-    public AdminResponseDto adminResponseDto (@RequestBody AdminRequestDto requestDto){
-        return adminService.insertDataIntoAdmin(requestDto);
+    public AdminResponseDto adminResponseDto (@RequestBody AdminRequestDto adminRequestDto){
+        return adminService.insertDataIntoAdmin(adminRequestDto);
+    }
+
+//    @PutMapping("/update-employee/{id}" )
+//    public AdminResponseDto adminResponseDto (@PathVariable("id") String id, @RequestBody AdminRequestDto adminRequestDto){
+//        return adminService.updateAdmin(id,adminRequestDto);
+//    }
+
+    @DeleteMapping("/delete-employee/{id}")
+    public AdminResponseDto adminResponseDto (@PathVariable("id") Long id){
+        return adminService.deleteEmployee(id);
     }
 }
