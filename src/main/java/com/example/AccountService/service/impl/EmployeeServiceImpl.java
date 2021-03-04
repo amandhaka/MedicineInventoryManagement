@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeResponseDto insertDataIntoEmployee(EmployeeRequestDto requestDto) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(requestDto,employee);
+        String encodedPassword = encodePassword(requestDto.getPassword());
+        employee.setPassword(encodedPassword);
         Employee savedAdmin = employeeRepository.save(employee);
         EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
         BeanUtils.copyProperties(savedAdmin,employeeResponseDto);
@@ -49,5 +53,24 @@ public class EmployeeServiceImpl implements EmployeeService {
             responseDtoList.add(responseDto);
         }
         return responseDtoList;
+    }
+    private String encodePassword (String passwordToHash){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 }

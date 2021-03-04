@@ -12,6 +12,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @RestController
@@ -29,15 +31,14 @@ public class EmployeeController {
     @CrossOrigin
     @PostMapping("/login-as-employee")
     public EmployeeAuthenticationResponse generateToken(@RequestBody EmployeeAuthenticationRequest employeeAuthenticationRequest) throws BadCredentialsException{
-        System.out.println("Inside generateToken");
         try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employeeAuthenticationRequest.getUsername(), employeeAuthenticationRequest.getPassword()));
+            String encodedPassword = encodePassword(employeeAuthenticationRequest.getPassword());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employeeAuthenticationRequest.getUsername(), encodedPassword));
         } catch (BadCredentialsException ex) {
             throw new BadCredentialsException("Invalid");
         }
         EmployeeAuthenticationResponse employeeAuthenticationResponse = new EmployeeAuthenticationResponse();
         employeeAuthenticationResponse.setJwt(jwtUtil.generateToken(employeeAuthenticationRequest.getUsername()));
-        System.out.println("TOKEN RECEIVED");
         return employeeAuthenticationResponse;
     }
     @PostMapping("/register-as-employee")
@@ -50,4 +51,23 @@ public class EmployeeController {
         return employeeService.getEmployeeList();
     }
 
+    private String encodePassword (String passwordToHash){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++)
+            {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
 }
