@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private AdminRepository adminRespository;
+
 //    @Autowired
 //    private EmployeeClient employeeClient;
 
@@ -42,6 +45,12 @@ public class AdminServiceImpl implements AdminService {
     public AdminResponseDto insertDataIntoAdmin(AdminRequestDto requestDto) {
         Admin admin = new Admin();
         BeanUtils.copyProperties(requestDto,admin);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); // Strength set as 12
+        String plainPassword = requestDto.getPassword();
+        String encodedPassword = encoder.encode(plainPassword);
+
+        admin.setPassword(encodedPassword);
+
         Admin savedAdmin = adminRespository.save(admin);
         AdminResponseDto adminResponseDto = new AdminResponseDto();
         BeanUtils.copyProperties(savedAdmin,adminResponseDto);

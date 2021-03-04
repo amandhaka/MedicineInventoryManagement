@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +27,10 @@ public class AdminController {
     @PostMapping("/login-as-admin")
     public AdminAuthenticationResponse generateToken(@RequestBody AdminAuthenticationRequest adminAuthenticationRequest) throws BadCredentialsException {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminAuthenticationRequest.getUsername(),adminAuthenticationRequest.getPassword()));
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); // Strength set as 12
+            String plainPassword = adminAuthenticationRequest.getPassword();
+            String encodedPassword = encoder.encode(plainPassword);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminAuthenticationRequest.getUsername(),encodedPassword));
         } catch (BadCredentialsException ex){
             System.out.println("LoggedInAsAdmin");
             throw new BadCredentialsException("Invalid Credentials");
