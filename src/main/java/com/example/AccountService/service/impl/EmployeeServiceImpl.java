@@ -7,12 +7,14 @@ import com.example.AccountService.repository.EmployeeRepository;
 import com.example.AccountService.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -35,5 +37,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeResponseDto employeeResponseDto = new EmployeeResponseDto();
         BeanUtils.copyProperties(savedAdmin,employeeResponseDto);
         return employeeResponseDto;
+    }
+
+    @Override
+    public List<EmployeeResponseDto> getEmployeeList() {
+        List<Employee> listOfEmployee = employeeRepository.findAll();
+        List<EmployeeResponseDto> responseDtoList = new ArrayList<>();
+        for(Employee employee : listOfEmployee){
+            EmployeeResponseDto responseDto = new EmployeeResponseDto();
+            BeanUtils.copyProperties(employee,responseDto);
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
     }
 }

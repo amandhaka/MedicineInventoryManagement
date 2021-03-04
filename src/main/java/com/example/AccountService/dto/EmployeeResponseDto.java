@@ -1,5 +1,6 @@
 package com.example.AccountService.dto;
 
+
 import lombok.Data;
 
 @Data
@@ -9,3 +10,4 @@ public class EmployeeResponseDto {
     private String password;
     private String name;
 }
+

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -26,8 +26,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @PostMapping("/login")
+    @CrossOrigin
+    @PostMapping("/login-as-employee")
     public EmployeeAuthenticationResponse generateToken(@RequestBody EmployeeAuthenticationRequest employeeAuthenticationRequest) throws BadCredentialsException{
+        System.out.println("Inside generateToken");
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(employeeAuthenticationRequest.getUsername(), employeeAuthenticationRequest.getPassword()));
         } catch (BadCredentialsException ex) {
@@ -35,12 +37,17 @@ public class EmployeeController {
         }
         EmployeeAuthenticationResponse employeeAuthenticationResponse = new EmployeeAuthenticationResponse();
         employeeAuthenticationResponse.setJwt(jwtUtil.generateToken(employeeAuthenticationRequest.getUsername()));
+        System.out.println("TOKEN RECEIVED");
         return employeeAuthenticationResponse;
     }
-
-    @PostMapping("/register-as-user")
+    @PostMapping("/register-as-employee")
     public EmployeeResponseDto employeeResponseDto(@RequestBody EmployeeRequestDto requestDto){
         return employeeService.insertDataIntoEmployee(requestDto);
+    }
+
+    @GetMapping("/get-employee-list")
+    public List<EmployeeResponseDto> employeeResponseDto() {
+        return employeeService.getEmployeeList();
     }
 
 }
