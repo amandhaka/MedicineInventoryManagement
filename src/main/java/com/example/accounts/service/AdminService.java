@@ -13,7 +13,7 @@ public interface AdminService extends UserDetailsService {
     @Override
     UserDetails loadUserByUsername(String s) throws UsernameNotFoundException;
 
-    AdminResponseDto insertDataIntoAdmin(AdminRequestDto requestDto);
+    AdminResponseDto insertDataIntoAdmin(AdminRequestDto requestDto) throws Exception;
 
     //AdminResponseDto updateAdmin(String id,AdminRequestDto adminRequestDto);
 
