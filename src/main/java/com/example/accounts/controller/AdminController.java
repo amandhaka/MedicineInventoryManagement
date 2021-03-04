@@ -26,6 +26,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @CrossOrigin
     @PostMapping("/login-as-admin")
     public AdminAuthenticationResponse generateToken(@RequestBody AdminAuthenticationRequest adminAuthenticationRequest) throws Exception {
         try{
@@ -40,6 +41,7 @@ public class AdminController {
         return adminAuthenticationResponse;
     }
 
+    @CrossOrigin
     @PostMapping("/register-as-admin")
     public AdminResponseDto adminResponseDto (@RequestBody AdminRequestDto adminRequestDto) throws Exception{
         return adminService.insertDataIntoAdmin(adminRequestDto);
