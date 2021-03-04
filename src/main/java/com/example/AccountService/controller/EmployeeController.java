@@ -41,6 +41,7 @@ public class EmployeeController {
         employeeAuthenticationResponse.setJwt(jwtUtil.generateToken(employeeAuthenticationRequest.getUsername()));
         return employeeAuthenticationResponse;
     }
+    @CrossOrigin
     @PostMapping("/register-as-employee")
     public EmployeeResponseDto employeeResponseDto(@RequestBody EmployeeRequestDto requestDto){
         return employeeService.insertDataIntoEmployee(requestDto);
