@@ -1,7 +1,6 @@
 package com.example.accounts.client;
 
 
-import com.example.accounts.dto.EmployeeResponseDto;
 import com.example.accounts.dto.MedicineResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

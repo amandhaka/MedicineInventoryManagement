@@ -15,9 +15,4 @@ public interface AdminService extends UserDetailsService {
 
     AdminResponseDto insertDataIntoAdmin(AdminRequestDto requestDto) throws Exception;
 
-    //AdminResponseDto updateAdmin(String id,AdminRequestDto adminRequestDto);
-
-    AdminResponseDto deleteEmployee(Long id);
-
-    // List<EmployeeResponseDto> getEmployeeList ();
 }

@@ -1,9 +1,7 @@
 package com.example.accounts.controller;
 
-import com.example.accounts.dto.AdminAuthenticationRequest;
-import com.example.accounts.dto.AdminAuthenticationResponse;
-import com.example.accounts.dto.AdminRequestDto;
-import com.example.accounts.dto.AdminResponseDto;
+import com.example.accounts.client.EmployeeClient;
+import com.example.accounts.dto.*;
 import com.example.accounts.service.AdminService;
 import com.example.accounts.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @RestController
 public class AdminController {
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private EmployeeClient employeeClient;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -38,6 +40,8 @@ public class AdminController {
         }
         AdminAuthenticationResponse adminAuthenticationResponse = new AdminAuthenticationResponse();
         adminAuthenticationResponse.setJwt(jwtUtil.generateToken(adminAuthenticationRequest.getUsername()));
+        adminAuthenticationResponse.setUsername(adminAuthenticationRequest.getUsername());
+        adminAuthenticationResponse.setRole("Admin");
         return adminAuthenticationResponse;
     }
 
@@ -47,16 +51,11 @@ public class AdminController {
         return adminService.insertDataIntoAdmin(adminRequestDto);
     }
 
-//    @PutMapping("/update-employee/{id}" )
-//    public AdminResponseDto adminResponseDto (@PathVariable("id") String id, @RequestBody AdminRequestDto adminRequestDto){
-//        return adminService.updateAdmin(id,adminRequestDto);
-//    }
-
-    @DeleteMapping("/delete-employee/{id}")
-    public AdminResponseDto adminResponseDto (@PathVariable("id") Long id){
-        return adminService.deleteEmployee(id);
+    @CrossOrigin
+    @GetMapping("/get-employee-list")
+    public List<EmployeeResponseDto> employeeResponseDtoList (){
+        return employeeClient.getEmployeeList();
     }
-
     private String encodePassword (String passwordToHash){
         String generatedPassword = null;
         try {

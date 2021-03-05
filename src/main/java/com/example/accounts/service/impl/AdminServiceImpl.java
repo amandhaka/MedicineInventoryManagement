@@ -5,6 +5,7 @@ import com.example.accounts.dto.AdminResponseDto;
 import com.example.accounts.entity.Admin;
 import com.example.accounts.repository.AdminRepository;
 import com.example.accounts.service.AdminService;
+import com.example.accounts.util.JwtUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -22,21 +22,17 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminRepository adminRespository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
 
-//    @Autowired
-//    private EmployeeClient employeeClient;
+    @Autowired
+    private AdminService adminService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin=adminRespository.findByUsername(username);
         return new User(admin.getUsername(), admin.getPassword(), new ArrayList<>());
     }
-
-//    @Override
-//    public List<EmployeeResponseDto> getEmployeeList() {
-//        List<EmployeeResponseDto> employeeList = employeeClient.getEmployeeList();
-//        return employeeList;
-//    }
 
     @Override
     public AdminResponseDto insertDataIntoAdmin(AdminRequestDto requestDto) throws Exception {
@@ -50,18 +46,6 @@ public class AdminServiceImpl implements AdminService {
         return adminResponseDto;
     }
 
-    @Override
-    public AdminResponseDto deleteEmployee(Long id) {
-        Optional<Admin> adminOptional = adminRespository.findById(id);
-        if (adminOptional.isPresent()) {
-            Admin adminFromDb = adminOptional.get();
-            AdminResponseDto adminResponseDto = new AdminResponseDto();
-            BeanUtils.copyProperties(adminFromDb, adminResponseDto);
-            adminRespository.deleteById(id);
-            return adminResponseDto;
-        }
-        return null;
-    }
     private String encodePassword (String passwordToHash){
         String generatedPassword = null;
         try {
@@ -81,5 +65,4 @@ public class AdminServiceImpl implements AdminService {
         }
         return generatedPassword;
     }
-
 }
