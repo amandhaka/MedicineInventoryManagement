@@ -47,6 +47,7 @@ public class EmployeeController {
         return employeeService.insertDataIntoEmployee(requestDto);
     }
 
+    @CrossOrigin
     @GetMapping("/get-employee-list")
     public List<EmployeeResponseDto> employeeResponseDto() {
         return employeeService.getEmployeeList();
