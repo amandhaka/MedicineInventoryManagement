@@ -34,7 +34,6 @@ public class AdminController {
         try{
             String encodedPassword = encodePassword(adminAuthenticationRequest.getPassword());
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminAuthenticationRequest.getUsername(),encodedPassword));
-            System.out.println(adminAuthenticationRequest.getPassword());
         } catch (BadCredentialsException ex){
             throw new BadCredentialsException("Invalid Credentials");
         }
@@ -56,6 +55,7 @@ public class AdminController {
     public List<EmployeeResponseDto> employeeResponseDtoList (){
         return employeeClient.getEmployeeList();
     }
+
     private String encodePassword (String passwordToHash){
         String generatedPassword = null;
         try {
