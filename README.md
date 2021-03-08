@@ -28,10 +28,10 @@ This repo is consist of three microservices in different branches and UI code.
 
 ### Utkarsh Ashish role in this project:
 1.Frontend Development of pages (Login Page, Registration Page, Admin Page, Employee Page and other pages also)
-2.Adding the animation for icons and background images and pop-out feature of login page.
-3.API integration of Manage Order page in admin - create order, update order, view order and delete order.
-4.Animation of Admin Page including the text animation.
-5.Form validation and alert generation on submitting the forms. 
+1.Adding the animation for icons and background images and pop-out feature of login page.
+1.API integration of Manage Order page in admin - create order, update order, view order and delete order.
+1.Animation of Admin Page including the text animation.
+1.Form validation and alert generation on submitting the forms. 
 
 ### Meghna role in this project:
 1.API integration of Manage Inventory page in admin - add an item, update an item, delete an item
