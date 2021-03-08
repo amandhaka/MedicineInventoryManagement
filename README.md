@@ -60,6 +60,6 @@ npm run build
 ```
 npm run lint
 ```
-
+```
 For running spring boot microservices:
 Clone the repository and install maven dependencies.
