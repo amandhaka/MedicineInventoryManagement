@@ -6,7 +6,8 @@ This repo is consist of three microservices in different branches and UI code.
 4. Frontend: Consists of UI code.
 
 ## Each member role:
-### AMAN role in first project
+
+### Aman Dhaka role in this project
 1. Implemented two microservices i.e Employee and Admin.
 2. Created APIs for user's login and registeration part.
 3. Also created an api for admin role and used feign client to communicate with employee microservice.
@@ -14,9 +15,9 @@ This repo is consist of three microservices in different branches and UI code.
 5. Worked on fronted to call few API in the frontend - for search, register, login, get-employee list.
 6. Also created couple of user interfaces components - navigation bar, displaying data in tabular format.
 
-### Srikant Vaibhav role in this project:
+### Srikanta Vaibhav N. role in this project:
 1.Implemented 1 microservice (Inventory microservice).
-2. Created 16 APIs for Medicine, Category, Order and Request services.
+2.Created 16 APIs for Medicine, Category, Order and Request services.
 	  Medicine: create, update, delete, view item, view list, view by category, view medicine to order (i.e. out of stock, low in stock and expired medicines).
 		Category: create, and view category.
 		Order: create, view list, and delete order.
