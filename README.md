@@ -27,7 +27,7 @@ This repo is consist of three microservices in different branches and UI code.
 
 
 ### Utkarsh Ashish role in this project:
-1. I implemented the following things in my group project:
+1.I implemented the following things in my group project:
 2.Frontend Development of pages (Login Page, Registration Page, Admin Page, Employee Page and other pages also)
 3.Adding the animation for icons and background images and pop-out feature of login page.
 4.API integration of Manage Order page in admin - create order, update order, view order and delete order.
