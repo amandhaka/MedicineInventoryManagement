@@ -35,10 +35,10 @@ This repo is consist of three microservices in different branches and UI code.
 
 ### Meghna role in this project:
 1.API integration of Manage Inventory page in admin - add an item, update an item, delete an item
-2.API integration of Manage Request page in admin - view all requests, update an existing request, delete a request
-3.API integration of create request from employee page
-4.Form generation and hide/unhide forms on clicking on the button
-5.Menu pop out feature on the admin page
+2. API integration of Manage Request page in admin - view all requests, update an existing request, delete a request
+3. API integration of create request from employee page 
+4. Form generation and hide/unhide forms on clicking on the button
+6. Menu pop out feature on the admin page
 
 
 ## How to run this project: 
