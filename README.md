@@ -39,7 +39,6 @@ This repo is consist of three microservices in different branches and UI code.
 5.Menu pop out feature on the admin page
 
 
-
 ## How to run this project: 
 For running frontend branch code: 
 npm install
